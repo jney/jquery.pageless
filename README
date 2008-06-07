@@ -1,0 +1,21 @@
+PageLess - endless page
+
+Author: Jean-Sébastien Ney (jeansebastien.ney@gmail.com)
+
+Parameters:
+  current_page: current page (params[:page])
+  distance: distance to the end of page in px when ajax query is fired
+  loader: selector of the loader div (ajax activity indicator)
+  loader_html: html code of the div if loader not used
+  loader_msg: displayed ajax message
+  pagination: selector of the paginator divs. (if javascript is disabled paginator is required)
+  params: paramaters for the ajax query, you can pass auth_token here
+  total_page: total number of pages
+  url: URL used to request more data
+
+Requires: jquery + jquery dimensions
+
+Thanks to:
+ * codemonky.com/post/34940898
+ * www.unspace.ca/discover/pageless/
+ * famspam.com/facebox
