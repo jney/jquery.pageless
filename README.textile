@@ -1,0 +1,33 @@
+h1. PageLess - endless page
+
+h2. Description
+
+A jQuery plugin.
+As you scroll down you see more results coming back at you automatically.
+
+h2. Parameters
+
+* @current_page@: current page (params[:page])
+* @distance@: distance to the end of page in px when ajax query is fired
+* @loader@: selector of the loader div (ajax activity indicator)
+* @loader_html@: html code of the div if loader not used
+* @loader_msg@: displayed ajax message
+* @pagination@: selector of the paginator divs. (if javascript is disabled paginator is required)
+* @params@: paramaters for the ajax query, you can pass auth_token here
+* @total_page@: total number of pages
+* @url@: URL used to request more data
+
+h2. Requirements
+
+* jquery
+* jquery dimensions (included in jquery core in last versions)
+
+h2. Who use it
+
+* http://blag.ahax.de
+
+h2. Thanks to
+
+* http://codemonky.com/post/34940898
+* http://www.unspace.ca/discover/pageless/
+* http://famspam.com/facebox
