@@ -127,6 +127,8 @@
           $.pageless.loader.before(data) :
           $.pageless.el.append(data);
         $.pageless.loading(false);
+        if($.pageless.settings.complete)
+          $.pageless.settings.complete.call();
       });
     }
   };

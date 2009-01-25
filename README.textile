@@ -7,6 +7,7 @@ As you scroll down you see more results coming back at you automatically.
 
 h2. Parameters
 
+* @complete@: code to run after page loading
 * @current_page@: current page (params[:page])
 * @distance@: distance to the end of page in px when ajax query is fired
 * @loader@: selector of the loader div (ajax activity indicator)
