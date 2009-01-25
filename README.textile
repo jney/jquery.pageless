@@ -22,6 +22,10 @@ h2. Requirements
 * jquery
 * jquery dimensions (included in jquery core in last versions)
 
+h2. TODO
+
+Make it work with a div scroll.
+
 h2. Who use it
 
 * http://blag.ahax.de

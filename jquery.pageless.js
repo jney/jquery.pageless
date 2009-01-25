@@ -8,6 +8,7 @@
 //    distance: distance to the end of page in px when ajax query is fired
 //    loader: selector of the loader div (ajax activity indicator)
 //    loader_html: html code of the div if loader not used
+//    loader_image: image inside the loader
 //    loader_msg: displayed ajax message
 //    pagination: selector of the paginator divs. (if javascript is disabled paginator is required)
 //    params: paramaters for the ajax query, you can pass auth_token here
@@ -24,24 +25,30 @@
 
 (function($) {
   $.pageless = function(settings) {
-    $.isFunction(settings) ? settings.call() : $.pageless.init(settings)
+    $.isFunction(settings) ? settings.call() : $.pageless.init(settings);
   };
   
   // available params
   // loader: loading div
   // pagination: div selector for the pagination links
   // loader_msg:
+  // loader_image:
   // loader_html:
   $.pageless.settings = {
     current_page: 1,
-    pagination: '.pagination',
-    params: {}, // params of the query you can pass auth_token here
-    distance: 100, // page distance in px to the end when the ajax function is launch
-    loader_html  : '\
+    pagination:   '.pagination',
+    url:          location.href,
+    params:       {}, // params of the query you can pass auth_token here
+    distance:     100, // page distance in px to the end when the ajax function is launch
+    loader_image: "/images/load.gif"
+  };
+  
+  $.pageless.loader_html = function(){
+    return $.pageless.settings.loader_html || '\
   <div id="pageless_loader" style="display:none;text-align:center;width:100%;"> \
     <div class="msg" style="color:#e9e9e9;font-size:2em"></div>\
-    <img src="/images/load.gif" title="load" alt="loading more results" style="margin: 10px auto" /> \
-  </div>'
+    <img src="' + $.pageless.settings.loader_image + '" title="load" alt="loading more results" style="margin: 10px auto" /> \
+  </div>';
   };
 
   // settings params: total_pages
@@ -71,7 +78,7 @@
     if(settings.loader && $(this).find(settings.loader).length){
       $.pageless.loader = $(this).find(settings.loader);
     } else {
-      $(this).append($.pageless.settings.loader_html);
+      $(this).append($.pageless.loader_html());
       $.pageless.loader = $('#pageless_loader');
       $('#pageless_loader .msg').html(settings.loader_msg);
     }
@@ -113,12 +120,12 @@
       // move to next page
       $.pageless.settings.current_page++;
       // set up ajax query params
-      $.extend($.pageless.settings.params, {page: $.pageless.settings.current_page})
+      $.extend($.pageless.settings.params, {page: $.pageless.settings.current_page});
       // finally ajax query
       $.get($.pageless.settings.url, $.pageless.settings.params, function(data){
         $.pageless.loader ?
           $.pageless.loader.before(data) :
-          $.pageless.el.append(data)
+          $.pageless.el.append(data);
         $.pageless.loading(false);
       });
     }
