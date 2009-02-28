@@ -11,8 +11,8 @@ h2. Parameters
 * @current_page@: current page (params[:page])
 * @distance@: distance to the end of page in px when ajax query is fired
 * @loader@: selector of the loader div (ajax activity indicator)
-* @loader_html@: html code of the div if loader not used
-* @loader_msg@: displayed ajax message
+* @loaderHtml@: html code of the div if loader not used
+* @loaderMsg@: displayed ajax message
 * @pagination@: selector of the paginator divs. (if javascript is disabled paginator is required)
 * @params@: paramaters for the ajax query, you can pass auth_token here
 * @total_page@: total number of pages
@@ -21,7 +21,17 @@ h2. Parameters
 h2. Requirements
 
 * jquery
-* jquery dimensions (included in jquery core in last versions)
+
+h2. Demo
+
+check directory @example@ which include an example using "Ruby on rails":rubyonrails.org and "will_paginate":http://wiki.github.com/mislav/will_paginate gem.
+
+h3. Try it :
+
+* Make sure that ruby, rails and will_paginate are installed
+* Go to example directory and launch ./script/server
+* With your favorite browser go to http://localhost:3000
+* Then just scroll
 
 h2. TODO
 
