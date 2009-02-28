@@ -4,15 +4,15 @@
 // Author: Jean-Sébastien Ney (jeansebastien.ney@gmail.com)
 //
 // Parameters:
-//    current_page: current page (params[:page])
+//    currentPage: current page (params[:page])
 //    distance: distance to the end of page in px when ajax query is fired
 //    loader: selector of the loader div (ajax activity indicator)
-//    loader_html: html code of the div if loader not used
-//    loader_image: image inside the loader
-//    loader_msg: displayed ajax message
+//    loaderHtml: html code of the div if loader not used
+//    loaderImage: image inside the loader
+//    loaderMsg: displayed ajax message
 //    pagination: selector of the paginator divs. (if javascript is disabled paginator is required)
 //    params: paramaters for the ajax query, you can pass auth_token here
-//    total_page: total number of pages
+//    totalPage: total number of pages
 //    url: URL used to request more data
 //
 // Requires: jquery + jquery dimensions
@@ -31,27 +31,27 @@
   // available params
   // loader: loading div
   // pagination: div selector for the pagination links
-  // loader_msg:
-  // loader_image:
-  // loader_html:
+  // loaderMsg:
+  // loaderImage:
+  // loaderHtml:
   $.pageless.settings = {
-    current_page: 1,
+    currentPage:  1,
     pagination:   '.pagination',
     url:          location.href,
     params:       {}, // params of the query you can pass auth_token here
     distance:     100, // page distance in px to the end when the ajax function is launch
-    loader_image: "/images/load.gif"
+    loaderImage:  "/images/load.gif"
   };
   
-  $.pageless.loader_html = function(){
-    return $.pageless.settings.loader_html || '\
-  <div id="pageless_loader" style="display:none;text-align:center;width:100%;"> \
+  $.pageless.loaderHtml = function(){
+    return $.pageless.settings.loaderHtml || '\
+  <div id="pageless_loader" style="display:none;text-align:center;width:100%;">\
     <div class="msg" style="color:#e9e9e9;font-size:2em"></div>\
-    <img src="' + $.pageless.settings.loader_image + '" title="load" alt="loading more results" style="margin: 10px auto" /> \
+    <img src="' + $.pageless.settings.loaderImage + '" title="load" alt="loading more results" style="margin: 10px auto" />\
   </div>';
   };
 
-  // settings params: total_pages
+  // settings params: totalPages
   $.pageless.init = function (settings) {
     if ($.pageless.settings.inited) return;
     
@@ -64,7 +64,7 @@
       $($.pageless.settings.pagination).remove();
     
     // start the listener
-    $.pageless.start_listener();
+    $.pageless.startListener();
   };
   
   // init loader val
@@ -78,9 +78,9 @@
     if(settings.loader && $(this).find(settings.loader).length){
       $.pageless.loader = $(this).find(settings.loader);
     } else {
-      $(this).append($.pageless.loader_html());
+      $(this).append($.pageless.loaderHtml());
       $.pageless.loader = $('#pageless_loader');
-      $('#pageless_loader .msg').html(settings.loader_msg);
+      $('#pageless_loader .msg').html(settings.loaderMsg);
     }
   };
   
@@ -97,30 +97,30 @@
     }
   };
   
-  $.pageless.stop_listener = function () {
+  $.pageless.stopListener = function () {
     $(window).unbind('.pageless');
   };
   
-  $.pageless.start_listener = function () {
+  $.pageless.startListener = function () {
     $(window).bind('scroll.pageless', $.pageless.scroll);
   };
   
   $.pageless.scroll = function () {
     // listener was stopped or we've run out of pages
-    if($.pageless.settings.total_pages <= $.pageless.settings.current_page){
-      $.pageless.stop_listener();
+    if($.pageless.settings.totalPages <= $.pageless.settings.currentPage){
+      $.pageless.stopListener();
       return;
     }
     
     // distance to end of page
-    var distance_to_end = $(document).height()-$(window).scrollTop()-$(window).height();
+    var distanceToEnd = $(document).height()-$(window).scrollTop()-$(window).height();
     // if slider past our scroll offset, then fire a request for more data
-    if(!$.pageless.is_loading && (distance_to_end < $.pageless.settings.distance)) {
+    if(!$.pageless.is_loading && (distanceToEnd < $.pageless.settings.distance)) {
       $.pageless.loading(true);
       // move to next page
-      $.pageless.settings.current_page++;
+      $.pageless.settings.currentPage++;
       // set up ajax query params
-      $.extend($.pageless.settings.params, {page: $.pageless.settings.current_page});
+      $.extend($.pageless.settings.params, {page: $.pageless.settings.currentPage});
       // finally ajax query
       $.get($.pageless.settings.url, $.pageless.settings.params, function(data){
         $.pageless.loader ?
