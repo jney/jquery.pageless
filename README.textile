@@ -51,5 +51,6 @@ h2. Thanks to
 
 h2. Contributors
 
+* Jean-Sébastien Ney (jney)
 * Alexander Lang (langalex)
 * Lukas Rieder (Overbryd)
