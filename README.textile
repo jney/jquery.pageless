@@ -7,42 +7,49 @@ As you scroll down you see more results coming back at you automatically.
 
 h2. Parameters
 
-* @complete@: code to run after page loading
-* @current_page@: current page (params[:page])
+* @currentPage@: current page (params[:page])
 * @distance@: distance to the end of page in px when ajax query is fired
 * @loader@: selector of the loader div (ajax activity indicator)
 * @loaderHtml@: html code of the div if loader not used
+* @loaderImage@: image inside the loader
 * @loaderMsg@: displayed ajax message
 * @pagination@: selector of the paginator divs. (if javascript is disabled paginator is required)
 * @params@: paramaters for the ajax query, you can pass auth_token here
-* @total_page@: total number of pages
+* @totalPages@: total number of pages
 * @url@: URL used to request more data
+
+* @scrape@: A function to modify the incoming data. (Doesn't do anything by default)
+* @complete@: A function to call when a new page has been loaded (optional)
+* @afterStopListener@: A function to call when the last page has been loaded (optional)
 
 h2. Requirements
 
-* jquery
+* "jQuery":http://download.jquery.com
+* will_paginate (optional but usefull when it comes to pagination)
+  <pre>$ gem install will_paginate</pre>
 
 h2. Demo
 
-check directory @example@ which include an example using "Ruby on rails":rubyonrails.org and "will_paginate":http://wiki.github.com/mislav/will_paginate gem.
-
-h3. Try it :
-
-* Make sure that ruby, rails and will_paginate are installed
-* Go to example directory and launch ./script/server
-* With your favorite browser go to http://localhost:3000
-* Then just scroll
+In the @example@ directory you'll find a Rails app that just runs. It demonstrates the basic usage of pageless scrolling.
+<pre>$ script/server</pre>
+Then just navigate to http://localhost:3000 and enjoy!
 
 h2. TODO
 
 Make it work with a div scroll.
 
-h2. Who use it
+h2. Who uses it
 
 * http://blag.ahax.de
+* http://paperc.de/documents
 
 h2. Thanks to
 
 * http://codemonky.com/post/34940898
 * http://www.unspace.ca/discover/pageless/
 * http://famspam.com/facebox
+
+h2. Contributors
+
+* Alexander Lang (langalex)
+* Lukas Rieder (Overbryd)
