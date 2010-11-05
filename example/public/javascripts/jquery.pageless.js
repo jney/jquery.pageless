@@ -18,11 +18,11 @@
 //    totalPages: total number of pages
 //    url: URL used to request more data
 // Callback Parameters:
-//		scrape: A function to modify the incoming data. (Doesn't do anything by default)
-//		complete: A function to call when a new page has been loaded (optional)
-//		afterStopListener: A function to call when the last page has been loaded (optional)
+//    scrape: A function to modify the incoming data. (Doesn't do anything by default)
+//    complete: A function to call when a new page has been loaded (optional)
+//    afterStopListener: A function to call when the last page has been loaded (optional)
 //
-// Requires: jquery + jquery dimensions
+// Requires: jquery
 //
 // Thanks to:
 //  * codemonky.com/post/34940898
@@ -31,115 +31,136 @@
 // =======================================================================
  
 (function($) {
-  $.pageless = function(settings) {
-    $.isFunction(settings) ? settings.call() : $.pageless.init(settings);
+  
+  var FALSE = !1
+    , TRUE = !FALSE
+    , element
+    , isLoading = FALSE
+    , loader
+    , settings = { container: window
+                 , currentPage: 1
+                 , distance: 100
+                 , pagination: '.pagination'
+                 , params: {}
+                 , url: location.href
+                 , loaderImage: "/images/load.gif"
+                 , scrape: function(data) { return data; }
+                 };
+    
+  $.pageless = function(opts) {
+    $.isFunction(opts) ? settings.call() : init(opts);
   };
   
   // available params
+  // distance: page distance in px to the end when the ajax function is launch
   // loader: loading div
-  // pagination: div selector for the pagination links
   // loaderMsg:
   // loaderImage:
   // loaderHtml:
-  $.pageless.settings = {
-    currentPage:  1,
-    pagination:   '.pagination',
-    url:          location.href,
-    params:       {}, // params of the query you can pass auth_token here
-    distance:     100, // page distance in px to the end when the ajax function is launch
-    loaderImage:  "/images/load.gif",
-		scrape: function(data) { return data; }  // Don't do anything by default
-  };
+  // pagination: div selector for the pagination links
+  // params: params of the query you can pass auth_token here
   
-  $.pageless.loaderHtml = function(){
-    return $.pageless.settings.loaderHtml || '\
+  var loaderHtml = function () {
+    return settings.loaderHtml || '\
 <div id="pageless-loader" style="display:none;text-align:center;width:100%;">\
   <div class="msg" style="color:#e9e9e9;font-size:2em"></div>\
-  <img src="' + $.pageless.settings.loaderImage + '" title="load" alt="loading more results" style="margin: 10px auto" />\
+  <img src="' + settings.loaderImage + '" title="load" alt="loading more results" style="margin: 10px auto" />\
 </div>';
   };
  
   // settings params: totalPages
-  $.pageless.init = function(settings) {
-    if ($.pageless.settings.inited) return;
-    $.pageless.settings.inited = true;
+  var init = function (opts) {
+    if (settings.inited) return;
+    settings.inited = TRUE;
     
-    if (settings) $.extend($.pageless.settings, settings);
+    if (opts) $.extend(settings, opts);
     
     // for accessibility we can keep pagination links
     // but since we have javascript enabled we remove pagination links 
-    if($.pageless.settings.pagination)
-      $($.pageless.settings.pagination).remove();
+    if(settings.pagination) $(settings.pagination).remove();
     
     // start the listener
-    $.pageless.startListener();
+    startListener();
   };
   
-  // init loader val
-  $.pageless.isLoading = false;
-  
-  $.fn.pageless = function(settings) {
-    $.pageless.init(settings);
-    $.pageless.el = $(this);
+  $.fn.pageless = function (opts) {
+    var $el = $(this)
+      , $loader = $(opts.loader, $el);
+      
+    init(opts);
+    element = $el;
     
     // loader element
-    if(settings.loader && $(this).find(settings.loader).length){
-      $.pageless.loader = $(this).find(settings.loader);
+    if (opts.loader && $loader.length){
+      loader = $loader;
     } else {
-      $.pageless.loader = $($.pageless.loaderHtml());
-      $(this).append($.pageless.loader);
+      loader = $(loaderHtml());
+      $el.append(loader);
       // if we use the default loader, set the message
-      if(!settings.loaderHtml) { $('#pageless-loader .msg').html(settings.loaderMsg) }
+      if (!opts.loaderHtml) {
+        $('#pageless-loader .msg').html(opts.loaderMsg);
+      }
     }
   };
   
   //
-  $.pageless.loading = function(bool){
-    if(bool === true){
-      $.pageless.isLoading = true;
-      if($.pageless.loader)
-        $.pageless.loader.fadeIn('normal');
-    } else {
-      $.pageless.isLoading = false;
-      if($.pageless.loader)
-        $.pageless.loader.fadeOut('normal');
-    }
+  var loading = function (bool) {
+    (isLoading = bool)
+    ? (loader && loader.fadeIn('normal'))
+    : (loader && loader.fadeOut('normal'));
   };
   
-  $.pageless.stopListener = function() {
-    $(window).unbind('.pageless');
+  // an object will reach 
+  var distanceToBottom = function () {
+    var container = settings.container;
+    return (settings.container === window)
+    ? $(document).height() - $(container).scrollTop() - $(container).height()
+    : $(container)[0].scrollHeight - $(container).scrollTop() - $(container).height();
+  };
+
+  var stopListener = function() {
+    $(settings.container).unbind('.pageless');
   };
   
-  $.pageless.startListener = function() {
-    $(window).bind('scroll.pageless', $.pageless.scroll);
+  var startListener = function() {
+    $(settings.container).bind('scroll.pageless', scroll);
   };
   
-  $.pageless.scroll = function() {
+  var scroll = function() {
     // listener was stopped or we've run out of pages
-    if($.pageless.settings.totalPages <= $.pageless.settings.currentPage){
-      $.pageless.stopListener();
-			// if there is a afterStopListener callback we call it
-      if ($.pageless.settings.afterStopListener) { $.pageless.settings.afterStopListener.call(); }
+    if (settings.totalPages <= settings.currentPage) {
+      stopListener();
+      // if there is a afterStopListener callback we call it
+      if (settings.afterStopListener) { 
+        settings.afterStopListener.call(); 
+      }
       return;
     }
     
     // distance to end of page
-    var distance = $(document).height()-$(window).scrollTop()-$(window).height();
+    var distance = distanceToBottom();
+    
     // if slider past our scroll offset, then fire a request for more data
-    if(!$.pageless.isLoading && (distance < $.pageless.settings.distance)) {
-      $.pageless.loading(true);
+    if(!isLoading && (distance < settings.distance)) {
+      loading(TRUE);
       // move to next page
-      $.pageless.settings.currentPage++;
+      settings.currentPage++;
       // set up ajax query params
-      $.extend($.pageless.settings.params, {page: $.pageless.settings.currentPage});
+      $.extend( settings.params
+              , { page: settings.currentPage });
       // finally ajax query
-      $.get($.pageless.settings.url, $.pageless.settings.params, function(data){
-				var data = $.pageless.settings.scrape(data);
-				if ($.pageless.loader) { $.pageless.loader.before(data) } else { $.pageless.el.append(data) }
-        $.pageless.loading(false);
-        // if there is a complete callback we call it
-        if ($.pageless.settings.complete) { $.pageless.settings.complete.call(); }
-      });
+      $.get( settings.url
+           , settings.params
+           , function (data) {
+               var data = settings.scrape(data);
+               
+               loader ? loader.before(data) : element.append(data);
+               
+               loading(FALSE);
+               
+               // if there is a complete callback we call it
+               if (settings.complete) settings.complete.call();
+           });
     }
   };
 })(jQuery);
