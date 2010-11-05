@@ -51,15 +51,6 @@
     $.isFunction(opts) ? settings.call() : init(opts);
   };
   
-  // available params
-  // distance: page distance in px to the end when the ajax function is launch
-  // loader: loading div
-  // loaderMsg:
-  // loaderImage:
-  // loaderHtml:
-  // pagination: div selector for the pagination links
-  // params: params of the query you can pass auth_token here
-  
   var loaderHtml = function () {
     return settings.loaderHtml || '\
 <div id="pageless-loader" style="display:none;text-align:center;width:100%;">\
@@ -91,7 +82,7 @@
     element = $el;
     
     // loader element
-    if (opts.loader && $loader.length){
+    if (opts.loader && $loader.length) {
       loader = $loader;
     } else {
       loader = $(loaderHtml());
@@ -153,11 +144,8 @@
            , settings.params
            , function (data) {
                var data = settings.scrape(data);
-               
                loader ? loader.before(data) : element.append(data);
-               
                loading(FALSE);
-               
                // if there is a complete callback we call it
                if (settings.complete) settings.complete.call();
            });

@@ -8,4 +8,8 @@ class ArticlesController < ApplicationController
       render :partial => @articles
     end
   end
+  
+  def within_a_div
+    index
+  end
 end
