@@ -2,8 +2,9 @@ h1. PageLess - endless page
 
 h2. Description
 
-A jQuery plugin.
+Pageless is a jQuery plugin.
 As you scroll down you see more results coming back at you automatically.
+It provides an automatic pagination in an accessible way : if javascript is disabled your standard pagination is supposed to work.
 
 h2. Parameters
 
@@ -20,7 +21,7 @@ h2. Parameters
 
 * @scrape@: A function to modify the incoming data. (Doesn't do anything by default)
 * @complete@: A function to call when a new page has been loaded (optional)
-* @afterStopListener@: A function to call when the last page has been loaded (optional)
+* @end@: A function to call when the last page has been loaded (optional)
 
 h2. Requirements
 
@@ -34,9 +35,14 @@ In the @example@ directory you'll find a Rails app that just runs. It demonstrat
 <pre>$ script/server</pre>
 Then just navigate to http://localhost:3000 and enjoy!
 
-h2. TODO
+h2. Usage
 
-Make it work with a div scroll.
+<code><pre>
+$('#results').pageless({ totalPages: 10
+                       , url: '/articles/'
+                       , loaderMsg: 'Loading more results'
+                       });
+</pre></code>
 
 h2. Who uses it
 
