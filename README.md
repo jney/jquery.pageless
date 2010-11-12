@@ -28,7 +28,7 @@ Parameters
 Requirements
 ------------
 
-* "jQuery":http://download.jquery.com
+* [jQuery](http://download.jquery.com)
 
 Demo
 ----
@@ -63,6 +63,6 @@ Thanks to
 Contributors
 ------------
 
-* Jean-Sébastien Ney (jney)
-* Alexander Lang (langalex)
-* Lukas Rieder (Overbryd)
+* [Jean-Sébastien Ney](https://github.com/jney)
+* [Alexander Lang](https://github.com/langalex)
+* [Lukas Rieder](https://github.com/Overbryd)
