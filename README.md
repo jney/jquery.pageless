@@ -47,12 +47,6 @@ Usage
                            , loaderMsg: 'Loading more results'
                            });
 
-Who uses it
------------
-
-* http://blag.ahax.de
-* http://paperc.de/documents
-
 Thanks to
 ---------
 
