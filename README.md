@@ -29,9 +29,6 @@ Requirements
 ------------
 
 * "jQuery":http://download.jquery.com
-* will_paginate (optional but usefull when it comes to pagination)
-
-        $ gem install will_paginate
 
 Demo
 ----
