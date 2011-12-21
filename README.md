@@ -28,7 +28,7 @@ Parameters
 Requirements
 ------------
 
-* [jQuery](http://download.jquery.com)
+* [jQuery 1.4](http://download.jquery.com)
 
 Demo
 ----
