@@ -1,0 +1,16 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <title>Articles: <%= controller.action_name %></title>
+    <%= stylesheet_link_tag 'scaffold' -%>
+    <%= javascript_include_tag 'jquery-1.3.2.min', 'jquery.pageless' -%>
+  </head>
+  <body>
+    <div id="results" style="width:800px;margin:auto;">
+      <%= yield  %>
+    </div>
+  </body>
+</html>
