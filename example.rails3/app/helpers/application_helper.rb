@@ -3,7 +3,8 @@ module ApplicationHelper
     opts = {
       :totalPages => total_pages,
       :url        => url,
-      :loaderMsg  => 'Loading more results'
+      :loaderMsg  => 'Loading more results',
+      :loaderImage => image_path("load.gif")
     }
     
     container && opts[:container] ||= container
