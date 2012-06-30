@@ -1,0 +1,8 @@
+<h1 style="color:red;margin-bottom:3em">Listing articles</h1>
+
+<%= render(:partial => "article", :collection => @articles) %>
+
+<br />
+<%= will_paginate(@articles) %>
+<%= pageless(@articles.total_pages, articles_path, "#results") %>
+<style>#results {height:400px;overflow:auto;}</style>
