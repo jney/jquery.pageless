@@ -30,23 +30,17 @@ Requirements
 
 * [jQuery](http://download.jquery.com)
 
-Demo (Rails 2)
-----
 
-In the `example` directory you'll find a Rails app that just runs. It demonstrates the basic usage of pageless scrolling.
-
-    $ script/server
-    
 Then just navigate to http://localhost:3000 and enjoy!
 
 Demo (Rails 3)
 ----
 
-In the `example.rails3` directory you'll find a Rails 3 app that just runs. It demonstrates the basic usage of pageless scrolling.
+[Demo](https://github.com/jney/jquery.pageless.demo) is a Rails 3 app that just runs. It demonstrates the basic usage of pageless scrolling.
 
-	$ bundle install
+    $ bundle install
     $ rails s
-    
+
 Then just navigate to http://localhost:3000 and enjoy!
 
 Usage
