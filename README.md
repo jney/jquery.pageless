@@ -21,6 +21,7 @@ Parameters
 * `params`: paramaters for the ajax query, you can pass auth_token here
 * `totalPages`: total number of pages
 * `url`: URL used to request more data
+* `method`: HTML method for call URL, default - get
 * `scrape`: A function to modify the incoming data. (Doesn't do anything by default)
 * `complete`: A function to call when a new page has been loaded (optional)
 * `end`: A function to call when the last page has been loaded (optional)
